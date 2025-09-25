@@ -1,0 +1,7 @@
+apimServiceName: p-weu-apim-new
+namedValues:
+loggers:  
+diagnostics:  
+backends:
+apis:
+  
