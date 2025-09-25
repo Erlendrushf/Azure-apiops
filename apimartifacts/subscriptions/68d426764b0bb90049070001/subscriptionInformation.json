@@ -1,8 +1,0 @@
-{
-  "properties": {
-    "scope": "/subscriptions/6a5e05c3-6e0d-453d-bed5-87d632cdc296/resourceGroups/p-weu-apim-old/providers/Microsoft.ApiManagement/service/p-weu-apim-old/products/starter",
-    "allowTracing": false,
-    "ownerId": "/subscriptions/6a5e05c3-6e0d-453d-bed5-87d632cdc296/resourceGroups/p-weu-apim-old/providers/Microsoft.ApiManagement/service/p-weu-apim-old/users/1",
-    "state": "active"
-  }
-}
