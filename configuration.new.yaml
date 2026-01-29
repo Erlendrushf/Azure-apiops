@@ -1,5 +1,7 @@
 apimServiceName: p-weu-apim-new
-namedValues:
+namedValues: 
+  - name: APIM-instance
+    value: new
 loggers:  
 diagnostics:  
 backends:
