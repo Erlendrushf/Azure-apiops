@@ -1,8 +1,8 @@
 apimServiceName: p-swe-apim-new
 namedValues: 
-  - name: APIM-instance
+  - name: apim-instance
     properties:
-      displayName: APIM-instance
+      displayName: apim-instance
       value: "new"
 loggers:  
 diagnostics:  
