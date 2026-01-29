@@ -1,8 +1,0 @@
-{
-  "properties": {
-    "scope": "/subscriptions/2baba5e9-93df-4094-9250-cdca14c9175a/resourceGroups/p-swe-apim-old/providers/Microsoft.ApiManagement/service/p-swe-apim-old/products/starter",
-    "allowTracing": false,
-    "ownerId": "/subscriptions/2baba5e9-93df-4094-9250-cdca14c9175a/resourceGroups/p-swe-apim-old/providers/Microsoft.ApiManagement/service/p-swe-apim-old/users/1",
-    "state": "active"
-  }
-}
