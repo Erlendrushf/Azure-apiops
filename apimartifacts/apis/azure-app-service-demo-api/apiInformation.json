@@ -1,0 +1,19 @@
+{
+  "properties": {
+    "path": "appservice",
+    "apiRevision": "1",
+    "authenticationSettings": {},
+    "description": "A comprehensive demo API showcasing FastAPI capabilities",
+    "isCurrent": true,
+    "displayName": "Azure App Service Demo API",
+    "protocols": [
+      "http",
+      "https"
+    ],
+    "subscriptionKeyParameterNames": {
+      "header": "Ocp-Apim-Subscription-Key",
+      "query": "subscription-key"
+    },
+    "subscriptionRequired": false
+  }
+}

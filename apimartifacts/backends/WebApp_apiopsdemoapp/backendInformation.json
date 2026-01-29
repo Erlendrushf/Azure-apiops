@@ -1,0 +1,8 @@
+{
+  "properties": {
+    "description": "apiopsdemoapp",
+    "protocol": "http",
+    "resourceId": "https://management.azure.com/subscriptions/2baba5e9-93df-4094-9250-cdca14c9175a/resourceGroups/p-swe-rg-backend/providers/Microsoft.Web/sites/apiopsdemoapp",
+    "url": "https://apiopsdemoapp.azurewebsites.net"
+  }
+}
