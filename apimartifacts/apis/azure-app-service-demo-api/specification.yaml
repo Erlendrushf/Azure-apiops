@@ -1,0 +1,603 @@
+openapi: 3.0.1
+info:
+  title: Azure App Service Demo API
+  description: A comprehensive demo API showcasing FastAPI capabilities
+  version: '1.0'
+servers:
+  - url: http://p-swe-apim-old.azure-api.net/appservice
+  - url: https://p-swe-apim-old.azure-api.net/appservice
+paths:
+  /:
+    get:
+      tags:
+        - General
+      summary: Root
+      description: Root endpoint - Welcome message
+      operationId: root__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: { }
+  /health:
+    get:
+      tags:
+        - General
+      summary: Health Check
+      description: Health check endpoint for monitoring
+      operationId: health_check_health_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+              example:
+                status: string
+                timestamp: string
+                version: string
+  /api/quotes:
+    get:
+      tags:
+        - Quotes
+      summary: Get Quotes
+      description: "Get inspirational quotes. Optionally filter by category.\n\nCategories: motivation, innovation, programming"
+      operationId: get_quotes_api_quotes_get
+      parameters:
+        - name: category
+          in: query
+          description: Filter by category
+          schema:
+            title: Category
+            type: string
+            anyOf:
+              - type: string
+              - type: 'null'
+            description: Filter by category
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                title: Response Get Quotes Api Quotes Get
+                type: array
+                items:
+                  $ref: '#/components/schemas/Quote'
+              example:
+                - id: string
+                  text: string
+                  author: string
+                  category: string
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+              example:
+                detail:
+                  - loc:
+                      - { }
+                    msg: string
+                    type: string
+  /api/quotes/random:
+    get:
+      tags:
+        - Quotes
+      summary: Get Random Quote
+      description: Get a random inspirational quote
+      operationId: get_random_quote_api_quotes_random_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quote'
+              example:
+                id: string
+                text: string
+                author: string
+                category: string
+  '/api/quotes/{quote_id}':
+    get:
+      tags:
+        - Quotes
+      summary: Get Quote By Id
+      description: Get a specific quote by ID
+      operationId: get_quote_by_id_api_quotes__quote_id__get
+      parameters:
+        - name: quote_id
+          in: path
+          required: true
+          schema:
+            title: Quote Id
+            type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quote'
+              example:
+                id: string
+                text: string
+                author: string
+                category: string
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+              example:
+                detail:
+                  - loc:
+                      - { }
+                    msg: string
+                    type: string
+  '/api/weather/{city}':
+    get:
+      tags:
+        - Weather
+      summary: Get Weather
+      description: Get mock weather data for a city
+      operationId: get_weather_api_weather__city__get
+      parameters:
+        - name: city
+          in: path
+          required: true
+          schema:
+            title: City
+            type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WeatherResponse'
+              example:
+                city: string
+                temperature: 0
+                condition: string
+                humidity: 0
+                timestamp: string
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+              example:
+                detail:
+                  - loc:
+                      - { }
+                    msg: string
+                    type: string
+  /api/tasks:
+    get:
+      tags:
+        - Tasks
+      summary: Get Tasks
+      description: Get all tasks. Optionally filter by completion status.
+      operationId: get_tasks_api_tasks_get
+      parameters:
+        - name: completed
+          in: query
+          description: Filter by completion status
+          schema:
+            title: Completed
+            type: string
+            anyOf:
+              - type: boolean
+              - type: 'null'
+            description: Filter by completion status
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                title: Response Get Tasks Api Tasks Get
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+              example:
+                - id: { }
+                  title: string
+                  description: { }
+                  completed: false
+                  created_at: { }
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+              example:
+                detail:
+                  - loc:
+                      - { }
+                    msg: string
+                    type: string
+    post:
+      tags:
+        - Tasks
+      summary: Create Task
+      description: Create a new task
+      operationId: create_task_api_tasks_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+            example:
+              id: { }
+              title: string
+              description: { }
+              completed: false
+              created_at: { }
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+              example:
+                id: { }
+                title: string
+                description: { }
+                completed: false
+                created_at: { }
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+              example:
+                detail:
+                  - loc:
+                      - { }
+                    msg: string
+                    type: string
+  '/api/tasks/{task_id}':
+    get:
+      tags:
+        - Tasks
+      summary: Get Task
+      description: Get a specific task by ID
+      operationId: get_task_api_tasks__task_id__get
+      parameters:
+        - name: task_id
+          in: path
+          required: true
+          schema:
+            title: Task Id
+            type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+              example:
+                id: { }
+                title: string
+                description: { }
+                completed: false
+                created_at: { }
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+              example:
+                detail:
+                  - loc:
+                      - { }
+                    msg: string
+                    type: string
+    put:
+      tags:
+        - Tasks
+      summary: Update Task
+      description: Update an existing task
+      operationId: update_task_api_tasks__task_id__put
+      parameters:
+        - name: task_id
+          in: path
+          required: true
+          schema:
+            title: Task Id
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+            example:
+              id: { }
+              title: string
+              description: { }
+              completed: false
+              created_at: { }
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+              example:
+                id: { }
+                title: string
+                description: { }
+                completed: false
+                created_at: { }
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+              example:
+                detail:
+                  - loc:
+                      - { }
+                    msg: string
+                    type: string
+    delete:
+      tags:
+        - Tasks
+      summary: Delete Task
+      description: Delete a task
+      operationId: delete_task_api_tasks__task_id__delete
+      parameters:
+        - name: task_id
+          in: path
+          required: true
+          schema:
+            title: Task Id
+            type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: { }
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+              example:
+                detail:
+                  - loc:
+                      - { }
+                    msg: string
+                    type: string
+  /api/random-user:
+    get:
+      tags:
+        - Utilities
+      summary: Get Random User
+      description: Generate a random user profile
+      operationId: get_random_user_api_random_user_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+              example:
+                username: string
+                email: string
+                full_name: string
+                avatar_url: { }
+  /api/uuid:
+    get:
+      tags:
+        - Utilities
+      summary: Generate Uuid
+      description: Generate one or more UUIDs
+      operationId: generate_uuid_api_uuid_get
+      parameters:
+        - name: count
+          in: query
+          description: Number of UUIDs to generate
+          schema:
+            title: Count
+            maximum: 100.0
+            minimum: 1.0
+            type: integer
+            description: Number of UUIDs to generate
+            default: 1
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: { }
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+              example:
+                detail:
+                  - loc:
+                      - { }
+                    msg: string
+                    type: string
+  /api/stats:
+    get:
+      tags:
+        - General
+      summary: Get Stats
+      description: Get application statistics
+      operationId: get_stats_api_stats_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: { }
+components:
+  schemas:
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          title: Detail
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+    HealthResponse:
+      title: HealthResponse
+      required:
+        - status
+        - timestamp
+        - version
+      type: object
+      properties:
+        status:
+          title: Status
+          type: string
+        timestamp:
+          title: Timestamp
+          type: string
+        version:
+          title: Version
+          type: string
+    Quote:
+      title: Quote
+      required:
+        - id
+        - text
+        - author
+        - category
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+        text:
+          title: Text
+          type: string
+        author:
+          title: Author
+          type: string
+        category:
+          title: Category
+          type: string
+    Task:
+      title: Task
+      required:
+        - title
+      type: object
+      properties:
+        id:
+          title: Id
+          anyOf:
+            - type: string
+            - type: 'null'
+        title:
+          title: Title
+          maxLength: 100
+          minLength: 1
+          type: string
+        description:
+          title: Description
+          anyOf:
+            - type: string
+            - type: 'null'
+        completed:
+          title: Completed
+          type: boolean
+          default: false
+        created_at:
+          title: Created At
+          anyOf:
+            - type: string
+            - type: 'null'
+    UserProfile:
+      title: UserProfile
+      required:
+        - username
+        - email
+        - full_name
+      type: object
+      properties:
+        username:
+          title: Username
+          type: string
+        email:
+          title: Email
+          type: string
+        full_name:
+          title: Full Name
+          type: string
+        avatar_url:
+          title: Avatar Url
+          anyOf:
+            - type: string
+            - type: 'null'
+    ValidationError:
+      title: ValidationError
+      required:
+        - loc
+        - msg
+        - type
+      type: object
+      properties:
+        loc:
+          title: Location
+          type: array
+          items:
+            anyOf:
+              - type: string
+              - type: integer
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+    WeatherResponse:
+      title: WeatherResponse
+      required:
+        - city
+        - temperature
+        - condition
+        - humidity
+        - timestamp
+      type: object
+      properties:
+        city:
+          title: City
+          type: string
+        temperature:
+          title: Temperature
+          type: number
+        condition:
+          title: Condition
+          type: string
+        humidity:
+          title: Humidity
+          type: integer
+        timestamp:
+          title: Timestamp
+          type: string
