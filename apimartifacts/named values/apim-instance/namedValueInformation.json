@@ -1,0 +1,8 @@
+{
+  "properties": {
+    "displayName": "apim-instance",
+    "secret": false,
+    "tags": [],
+    "value": "old"
+  }
+}

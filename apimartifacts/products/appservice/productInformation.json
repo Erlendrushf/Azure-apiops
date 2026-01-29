@@ -1,0 +1,8 @@
+{
+  "properties": {
+    "displayName": "appservice",
+    "description": "apiops demo",
+    "state": "published",
+    "subscriptionRequired": false
+  }
+}
